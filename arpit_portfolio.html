@@ -2254,14 +2254,35 @@
     /* CONTACT SECTION RE-DESIGN */
     .contact-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.1fr 1fr;
       gap: 3rem;
       align-items: stretch;
+    }
+
+    .contact-left-column,
+    .contact-right-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-left-column {
+      gap: 1.15rem;
+      position: relative;
+      min-height: 100%;
+    }
+
+    .contact-right-column {
+      gap: 1.5rem;
     }
 
     @media (max-width: 900px) {
       .contact-grid {
         grid-template-columns: 1fr;
+      }
+
+      .contact-left-column,
+      .contact-right-column {
+        gap: 1rem;
       }
     }
 
@@ -2274,7 +2295,9 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      min-height: 420px;
+      flex: 1 1 auto;
+      min-height: 320px;
+      height: auto;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
       transition: border-color 0.5s, box-shadow 0.5s, transform 0.4s;
     }
@@ -2283,6 +2306,38 @@
       border-color: rgba(255, 106, 0, 0.4);
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 106, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       transform: translateY(-4px);
+    }
+
+    .left-links-connector {
+      position: relative;
+      height: 18px;
+      pointer-events: none;
+      margin-top: -0.1rem;
+      margin-bottom: -0.15rem;
+    }
+
+    .left-links-connector::before {
+      content: '';
+      position: absolute;
+      left: 2.2rem;
+      right: 24%;
+      top: 9px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 106, 0, 0.42), rgba(0, 255, 157, 0.2), rgba(0, 212, 255, 0));
+      box-shadow: 0 0 10px rgba(255, 106, 0, 0.12);
+      opacity: 0.7;
+    }
+
+    .left-links-connector::after {
+      content: '';
+      position: absolute;
+      left: 2rem;
+      top: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 10px rgba(255, 106, 0, 0.35);
     }
 
     /* Scanline overlay */
@@ -2400,7 +2455,8 @@
       padding: 2rem 1.8rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-top: 5.2rem;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.8s ease;
@@ -2591,8 +2647,12 @@
         min-height: 350px;
       }
 
+      .left-links-connector {
+        display: none;
+      }
+
       .matrix-decoded-overlay {
-        padding: 1.5rem 1.2rem;
+        padding: 4.75rem 1.2rem 1.5rem;
       }
 
       .decoded-json-line {
@@ -2663,7 +2723,7 @@
     }
 
     .constellation-shell {
-      margin-top: 0.35rem;
+      margin-top: -0.15rem;
     }
 
     .constellation-head {
@@ -2671,7 +2731,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.65rem;
     }
 
     .constellation-title {
@@ -2819,6 +2879,72 @@
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
+    }
+
+    .left-mini-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: auto;
+    }
+
+    .left-mini-links .u-link {
+      min-height: 108px;
+      padding: 1rem 1.1rem;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    .left-mini-links .u-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.06), transparent 48%, rgba(0, 255, 157, 0.04));
+      opacity: 0.75;
+      pointer-events: none;
+    }
+
+    .left-mini-links .u-link:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28), 0 0 18px rgba(255, 106, 0, 0.08);
+    }
+
+    .left-mini-links .u-link i,
+    .left-mini-links .u-link .u-text,
+    .left-mini-links .u-link .copy-tip {
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-mini-links .u-link .u-lbl {
+      margin-bottom: 0.35rem;
+    }
+
+    .right-links .u-link {
+      min-height: 96px;
+    }
+
+    .right-links .u-link:hover {
+      transform: translateX(8px) translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .contact-terminal {
+        flex: initial;
+      }
+
+      .left-mini-links {
+        grid-template-columns: 1fr;
+        margin-top: 0;
+      }
+
+      .left-mini-links .u-link,
+      .right-links .u-link {
+        min-height: auto;
+      }
     }
 
     .u-link {
@@ -3140,17 +3266,18 @@
     <div class="section-container">
       <div class="cmd-header reveal"><span class="sym">&gt; $</span> <span class="cmd">about_me</span></div>
       <div class="about-grid">
-        <div class="about-text reveal">
+                <div class="about-text reveal">
           <p>Hello. I'm <span class="highlight">Arpit Malhotra</span>, a Computer Science student at <span
               class="hl-blue">SRM Institute of Science and Technology</span> with a strong interest in building <span
               class="highlight">practical, user-focused technology solutions</span>.</p>
-          <p>I enjoy working on projects that solve real-world problems — from <span class="hl-blue">healthcare and
-              analytics</span> to full-stack applications and interactive web experiences. My work includes projects
-            such as <span class="highlight">diabetes prediction</span>, business intelligence dashboards, a student
-            portal system, a music streaming interface, and sports data analysis.</p>
-          <p>I’m passionate about learning, exploring new ideas, and continuously improving my problem-solving skills.
-            My goal is to create <span class="hl-blue">impactful solutions</span> that combine <span
-              class="highlight">innovation, usability, and meaningful results</span>.</p>
+          <p>I enjoy working on projects that solve real-world problems from <span class="hl-blue">healthcare and
+              analytics</span> to full-stack applications and interactive web experiences. My work includes <span
+              class="highlight">diabetes prediction</span>, business intelligence dashboards, a student portal system,
+              a music streaming interface, and sports data analysis.</p>
+          <p>I also enjoy sharpening my problem-solving skills through coding challenges and logical thinking, which
+              helps me break complex tasks into clear, efficient steps. My goal is to build <span
+              class="hl-blue">impactful solutions</span> that combine <span class="highlight">innovation, usability,
+              and meaningful results</span>.</p>
         </div>
         <div class="about-info reveal">
           <div class="info-row"><i class="fas fa-map-marker-alt"></i><span class="label">location</span><span
@@ -3991,97 +4118,39 @@
       <div class="cmd-header reveal"><span class="sym">&gt; $</span> <span class="cmd">contact</span> <span
           class="flag">--reach-out</span></div>
       <div class="contact-grid">
-        <!-- MATRIX DECODE TERMINAL (LEFT) -->
-        <div class="contact-terminal reveal" id="contact-terminal">
-          <div class="matrix-term-header">
-            <div class="matrix-term-dots">
-              <span class="d-r"></span>
-              <span class="d-y"></span>
-              <span class="d-g"></span>
-            </div>
-            <span class="matrix-term-title">DECODE://contact_info.json</span>
-            <div class="matrix-term-status">
-              <span class="status-pulse"></span>
-              <span id="matrix-status-label">DECODING</span>
-            </div>
-          </div>
-          <div class="matrix-term-body">
-            <canvas id="matrix-rain-canvas"></canvas>
-            <div class="matrix-decoded-overlay" id="matrix-decoded">
-              <div id="contact-json-block"></div>
-              <div class="matrix-human-layer" id="matrix-human"></div>
-            </div>
-            <div class="matrix-scanline" id="matrix-scanline"></div>
-          </div>
-        </div>
-
-        <!-- SYSTEM PANEL (RIGHT) -->
-        <div class="contact-system-panel">
-          <!-- Status Card -->
-          <div class="status-card reveal">
-            <div class="status-badge">
-              <span class="blink-dot"></span> AVAILABLE FOR PROJECTS
-            </div>
-
-            <div class="stat-row">
-              <span class="stat-lbl">Location</span>
-              <span class="stat-val"><i class="fas fa-map-marker-alt" style="color:var(--orange);margin-right:5px;"></i>
-                Dharamshala, IN</span>
-            </div>
-
-            <div class="stat-row">
-              <span class="stat-lbl">Response Time</span>
-              <span class="stat-val">&lt; 24 Hours</span>
-            </div>
-
-            <div class="constellation-shell">
-              <div class="constellation-head">
-                <div class="constellation-title">
-                  <strong>Personal Constellation Map</strong>
-                  <span>Things That Define Me</span>
-                </div>
-                <div class="constellation-chip">Interactive Sky</div>
+        <div class="contact-left-column">
+          <!-- MATRIX DECODE TERMINAL (LEFT) -->
+          <div class="contact-terminal reveal" id="contact-terminal">
+            <div class="matrix-term-header">
+              <div class="matrix-term-dots">
+                <span class="d-r"></span>
+                <span class="d-y"></span>
+                <span class="d-g"></span>
               </div>
-              <div class="constellation-panel" id="constellation-panel" aria-label="Personal constellation map">
-                <canvas class="constellation-canvas" id="constellation-canvas"></canvas>
-                <div class="constellation-tooltip" id="constellation-tooltip" role="status" aria-live="polite"></div>
-                <div class="constellation-caption">Built from code, curiosity, and the outdoors.</div>
+              <span class="matrix-term-title">DECODE://contact_info.json</span>
+              <div class="matrix-term-status">
+                <span class="status-pulse"></span>
+                <span id="matrix-status-label">DECODING</span>
               </div>
+            </div>
+            <div class="matrix-term-body">
+              <canvas id="matrix-rain-canvas"></canvas>
+              <div class="matrix-decoded-overlay" id="matrix-decoded">
+                <div id="contact-json-block"></div>
+                <div class="matrix-human-layer" id="matrix-human"></div>
+              </div>
+              <div class="matrix-scanline" id="matrix-scanline"></div>
             </div>
           </div>
 
-          <!-- Social Links Panel -->
-          <div class="unified-links reveal">
-            <a href="mailto:arpitm169@gmail.com" class="u-link" id="copy-email">
-              <i class="fas fa-envelope"></i>
-              <div class="u-text">
-                <div class="u-lbl">Email Address</div>
-                <div class="u-val">arpitm169@gmail.com</div>
-              </div>
-              <span class="copy-tip">Click to Copy</span>
-            </a>
+          <div class="left-links-connector reveal" aria-hidden="true"></div>
 
+          <div class="unified-links left-mini-links reveal">
             <a href="https://www.linkedin.com/in/arpitm169/" target="_blank" class="u-link">
               <i class="fab fa-linkedin"></i>
               <div class="u-text">
                 <div class="u-lbl">LinkedIn Profile</div>
                 <div class="u-val">LinkedIn</div>
-              </div>
-            </a>
-
-            <a href="https://github.com/arpitm169" target="_blank" class="u-link">
-              <i class="fab fa-github"></i>
-              <div class="u-text">
-                <div class="u-lbl">GitHub Repository</div>
-                <div class="u-val">github.com/arpitm169</div>
-              </div>
-            </a>
-
-            <a href="https://www.instagram.com/arpitm169._/" target="_blank" class="u-link">
-              <i class="fab fa-instagram"></i>
-              <div class="u-text">
-                <div class="u-lbl">Instagram</div>
-                <div class="u-val">@arpitm169._</div>
               </div>
             </a>
 
@@ -4092,6 +4161,72 @@
                 <div class="u-val">leetcode.com/arpitm169</div>
               </div>
             </a>
+          </div>
+        </div>
+
+        <!-- SYSTEM PANEL (RIGHT) -->
+        <div class="contact-right-column">
+          <div class="contact-system-panel">
+            <!-- Status Card -->
+            <div class="status-card reveal">
+              <div class="status-badge">
+                <span class="blink-dot"></span> AVAILABLE FOR PROJECTS
+              </div>
+
+              <div class="stat-row">
+                <span class="stat-lbl">Location</span>
+                <span class="stat-val"><i class="fas fa-map-marker-alt" style="color:var(--orange);margin-right:5px;"></i>
+                  Dharamshala, IN</span>
+              </div>
+
+              <div class="stat-row">
+                <span class="stat-lbl">Response Time</span>
+                <span class="stat-val">&lt; 24 Hours</span>
+              </div>
+
+              <div class="constellation-shell">
+                <div class="constellation-head">
+                  <div class="constellation-title">
+                    <strong>Personal Constellation Map</strong>
+                    <span>Things That Define Me</span>
+                  </div>
+                  <div class="constellation-chip">Interactive Sky</div>
+                </div>
+                <div class="constellation-panel" id="constellation-panel" aria-label="Personal constellation map">
+                  <canvas class="constellation-canvas" id="constellation-canvas"></canvas>
+                  <div class="constellation-tooltip" id="constellation-tooltip" role="status" aria-live="polite"></div>
+                  <div class="constellation-caption">Built from code, curiosity, and the outdoors.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Links Panel -->
+            <div class="unified-links right-links reveal">
+              <a href="mailto:arpitm169@gmail.com" class="u-link" id="copy-email">
+                <i class="fas fa-envelope"></i>
+                <div class="u-text">
+                  <div class="u-lbl">Email Address</div>
+                  <div class="u-val">arpitm169@gmail.com</div>
+                </div>
+                <span class="copy-tip">Click to Copy</span>
+              </a>
+
+              <a href="https://github.com/arpitm169" target="_blank" class="u-link">
+                <i class="fab fa-github"></i>
+                <div class="u-text">
+                  <div class="u-lbl">GitHub Repository</div>
+                  <div class="u-val">github.com/arpitm169</div>
+                </div>
+              </a>
+
+              <a href="https://www.instagram.com/arpitm169._/" target="_blank" class="u-link">
+                <i class="fab fa-instagram"></i>
+                <div class="u-text">
+                  <div class="u-lbl">Instagram</div>
+                  <div class="u-val">@arpitm169._</div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -4151,9 +4286,6 @@
         <p class="footer-contact-desc">Explore all my work — from ML models to dashboards and web apps.</p>
         <a href="#projects" class="footer-proj-btn">
           <i class="fas fa-code-branch"></i> View All Projects
-        </a>
-        <a href="https://leetcode.com/u/arpitm169/" target="_blank" class="footer-lc-btn">
-          <i class="fas fa-code"></i> LeetCode Profile
         </a>
       </div>
 
@@ -5749,3 +5881,4 @@
 </body>
 
 </html>
+
