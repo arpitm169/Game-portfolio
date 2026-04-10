@@ -68,6 +68,16 @@
       cursor: none;
     }
 
+    /* Global Cursor Reset for Custom Cursor */
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      cursor: none !important;
+    }
+
     /* CUSTOM CURSOR */
     #cursor {
       position: fixed;
@@ -1407,7 +1417,7 @@
       /* Centered exactly on the SVG cord */
       animation: pulse-scroll-dot 2s infinite ease-in-out;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s, background 0.3s, box-shadow 0.3s;
     }
 
     @keyframes pulse-scroll-dot {
@@ -2013,63 +2023,232 @@
 
     .cert-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    @media (max-width: 1100px) {
+      .cert-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cert-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .cert-card {
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      padding: 1.3rem;
+      background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(12, 12, 12, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0.95rem;
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 0.75rem;
       transition: all 0.3s;
       backdrop-filter: blur(8px);
       opacity: 0;
       animation: fadeUp 0.5s ease forwards;
+      position: relative;
+      overflow: hidden;
+      min-height: 148px;
+      border-radius: 6px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+      isolation: isolate;
+    }
+
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 106, 0, 0.03), transparent 45%);
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    .cert-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0.95rem;
+      width: 46px;
+      height: 2px;
+      background: var(--orange);
+      box-shadow: none;
+    }
+
+    .cert-card .cert-hover-glow {
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.35s ease, transform 0.45s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cert-card .cert-sheen {
+      position: absolute;
+      top: -30%;
+      left: -65%;
+      width: 50%;
+      height: 180%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      transform: rotate(18deg);
+      transition: left 0.55s ease;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .cert-card:hover {
-      border-color: var(--purple);
-      box-shadow: var(--glow-purple);
-      transform: translateY(-3px);
+      border-color: rgba(255, 106, 0, 0.22);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 106, 0, 0.05);
+      transform: translateY(-5px) scale(1.01);
+    }
+
+    .cert-card:hover .cert-hover-glow {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cert-card:hover .cert-sheen {
+      left: 125%;
+    }
+
+    .cert-card:hover .cert-icon {
+      border-color: rgba(255, 106, 0, 0.34);
+      background: rgba(255, 106, 0, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .cert-card:hover .cert-badge {
+      border-color: rgba(255, 106, 0, 0.24);
+      color: var(--orange2);
+    }
+
+    .cert-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      position: relative;
+      z-index: 1;
     }
 
     .cert-icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border);
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255, 106, 0, 0.16);
+      background: rgba(255, 255, 255, 0.02);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-size: 1rem;
-      color: var(--purple);
+      font-size: 0.92rem;
+      color: var(--orange);
+      box-shadow: none;
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
     }
 
     .cert-info {
       flex: 1;
+      position: relative;
+      z-index: 1;
     }
 
     .cert-name {
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.74rem;
+      font-weight: 700;
       color: var(--text);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.22rem;
+      line-height: 1.35;
     }
 
     .cert-issuer {
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
     .cert-badge {
-      font-size: 0.6rem;
-      padding: 0.15rem 0.4rem;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: var(--purple);
+      font-size: 0.52rem;
+      padding: 0.22rem 0.42rem;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text2);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color 0.28s ease, border-color 0.28s ease;
+    }
+
+    .cert-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-track {
+      font-size: 0.54rem;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .cert-status {
+      font-size: 0.54rem;
+      color: var(--green);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .cert-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(0, 255, 157, 0.35);
+    }
+
+    .cert-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.38rem;
+      margin-top: auto;
+      width: fit-content;
+      padding: 0.42rem 0.62rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text2);
+      background: rgba(255, 255, 255, 0.015);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.28s ease, border-color 0.28s ease, color 0.28s ease, background 0.28s ease;
+    }
+
+    .cert-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 106, 0, 0.22);
+      color: var(--orange2);
+      background: rgba(255, 106, 0, 0.05);
     }
 
     /* CONTACT SECTION RE-DESIGN */
@@ -2086,121 +2265,286 @@
       }
     }
 
-    /* Terminal JSON Panel (Left) */
+    /* ===== MATRIX DECODE TERMINAL ===== */
     .contact-terminal {
-      background: rgba(10, 10, 10, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
+      background: rgba(5, 5, 5, 0.96);
+      border: 1px solid rgba(0, 255, 157, 0.12);
+      border-radius: 12px;
       overflow: hidden;
       position: relative;
-      transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
       display: flex;
       flex-direction: column;
+      min-height: 420px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      transition: border-color 0.5s, box-shadow 0.5s, transform 0.4s;
     }
 
     .contact-terminal:hover {
-      border-color: var(--blue);
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
-      transform: translateY(-5px);
+      border-color: rgba(255, 106, 0, 0.4);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 106, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transform: translateY(-4px);
     }
 
-    .term-header {
-      background: rgba(40, 40, 40, 0.4);
-      padding: 0.8rem 1rem;
+    /* Scanline overlay */
+    .contact-terminal::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.15) 2px, rgba(0, 0, 0, 0.15) 4px);
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0.35;
+    }
+
+    /* CRT glow edge */
+    .contact-terminal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 255, 157, 0.03) 100%);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .matrix-term-header {
+      background: rgba(0, 255, 157, 0.03);
+      border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+      padding: 0.75rem 1.2rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      justify-content: space-between;
+      position: relative;
+      z-index: 5;
     }
 
-    .dot {
+    .matrix-term-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .matrix-term-dots span {
       width: 10px;
       height: 10px;
       border-radius: 50%;
     }
 
-    .dot.red {
-      background: #ff5f56;
+    .matrix-term-dots .d-r { background: #ff5f56; }
+    .matrix-term-dots .d-y { background: #ffbd2e; }
+    .matrix-term-dots .d-g { background: #27c93f; }
+
+    .matrix-term-title {
+      font-size: 0.62rem;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      opacity: 0.8;
     }
 
-    .dot.yellow {
-      background: #ffbd2e;
+    .matrix-term-status {
+      font-size: 0.55rem;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .dot.green {
-      background: #27c93f;
+    .matrix-term-status .status-pulse {
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--orange);
+      animation: matrixPulse 2s ease-in-out infinite;
     }
 
-    .term-title {
-      font-size: 0.65rem;
-      color: var(--text3);
-      margin-left: 0.5rem;
-      font-family: inherit;
+    @keyframes matrixPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
-    .term-body {
-      padding: 1.5rem;
-      font-family: var(--font);
-      font-size: 0.82rem;
-      line-height: 1.6;
+    .matrix-term-body {
       position: relative;
-      min-height: 280px;
+      flex: 1;
+      overflow: hidden;
     }
 
-    /* Scanline effect for terminal */
-    .contact-terminal::after {
-      content: '';
+    #matrix-rain-canvas {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      background-size: 100% 4px, 3px 100%;
-      pointer-events: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .matrix-decoded-overlay {
+      position: absolute;
+      inset: 0;
       z-index: 2;
-      opacity: 0.3;
-    }
-
-    .json-line {
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      pointer-events: none;
       opacity: 0;
-      transform: translateY(5px);
-      transition: opacity 0.3s, transform 0.3s;
-      white-space: pre;
+      transition: opacity 0.8s ease;
     }
 
-    .json-line.visible {
+    .matrix-decoded-overlay.visible {
       opacity: 1;
-      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    .key {
+    .decoded-json-line {
+      font-size: 0.78rem;
+      line-height: 1.9;
+      white-space: pre;
+      font-family: var(--font);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .decoded-json-line.revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .decoded-json-line .dj-key {
       color: var(--blue);
       font-weight: 500;
     }
 
-    .val {
+    .decoded-json-line .dj-val {
       color: var(--green);
       font-weight: 500;
+      text-shadow: 0 0 8px rgba(0, 255, 157, 0.3);
     }
 
-    .val.str {
-      color: #88ffcc;
-    }
-
-    .bracket {
+    .decoded-json-line .dj-bracket {
       color: var(--text);
+      font-weight: 600;
     }
 
-    .term-cursor {
+    .decoded-json-line .dj-punctuation {
+      color: var(--text3);
+    }
+
+    /* Glitch effect */
+    .matrix-glitch {
+      animation: matrixGlitch 0.15s ease-in-out;
+    }
+
+    @keyframes matrixGlitch {
+      0% { transform: translate(0); filter: none; }
+      20% { transform: translate(-2px, 1px); filter: hue-rotate(40deg); }
+      40% { transform: translate(1px, -1px); filter: hue-rotate(-20deg) saturate(1.5); }
+      60% { transform: translate(-1px, 0px); filter: hue-rotate(10deg); }
+      80% { transform: translate(2px, 1px); filter: hue-rotate(-10deg); }
+      100% { transform: translate(0); filter: none; }
+    }
+
+    /* Scanline sweep */
+    .matrix-scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.15), rgba(255, 106, 0, 0.1), transparent);
+      z-index: 6;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .matrix-scanline.active {
+      animation: scanlineSweep 3s linear infinite;
+      opacity: 1;
+    }
+
+    @keyframes scanlineSweep {
+      0% { top: -3px; }
+      100% { top: 100%; }
+    }
+
+    /* Hover line highlight */
+    .decoded-json-line:hover {
+      background: rgba(0, 255, 157, 0.03);
+      border-radius: 3px;
+    }
+
+    .contact-terminal:hover .decoded-json-line .dj-val {
+      text-shadow: 0 0 12px rgba(0, 255, 157, 0.5);
+    }
+
+    /* Terminal blink cursor */
+    .matrix-blink-cursor {
       display: inline-block;
       width: 8px;
-      height: 15px;
-      background: var(--orange);
+      height: 14px;
+      background: var(--green);
       vertical-align: middle;
       margin-left: 4px;
       animation: blink 0.8s step-end infinite;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    /* PERSONALITY LAYER (Human Mode) */
+    .matrix-human-layer {
+      margin-top: 1.8rem;
+      border-top: 1px dashed rgba(0, 255, 157, 0.15);
+      padding-top: 1.2rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+      position: relative;
+    }
+
+    .matrix-human-layer.visible {
+      opacity: 1;
+    }
+
+    .meta-line {
+      font-size: 0.72rem;
+      color: var(--text2);
+      line-height: 1.8;
+      font-family: var(--font);
+      display: block;
+      padding: 0.25rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .meta-line .m-key {
+      color: var(--orange);
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .meta-line .m-val {
+      color: var(--text);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+
+    .meta-line.highlight {
+      color: var(--green);
+      opacity: 1;
+      text-shadow: 0 0 12px rgba(0, 255, 157, 0.5);
+      transform: scale(1.02) translateX(4px);
+    }
+
+    .meta-tagline {
+      font-style: italic;
+      color: var(--green);
+      opacity: 0.8;
+      font-size: 0.7rem;
+      margin-top: 0.6rem;
+      display: block;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 8px rgba(0, 255, 157, 0.2);
+    }
+
+    @media (max-width: 900px) {
+      .contact-terminal { min-height: 350px; }
+      .matrix-decoded-overlay { padding: 1.5rem 1.2rem; }
+      .decoded-json-line { font-size: 0.68rem; line-height: 1.7; }
     }
 
     /* System Status Panel (Right) */
@@ -2307,7 +2651,6 @@
       color: var(--text);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
-      cursor: pointer;
     }
 
     .u-link:hover {
@@ -2617,16 +2960,16 @@
       <div class="cmd-header reveal"><span class="sym">&gt; $</span> <span class="cmd">about_me</span></div>
       <div class="about-grid">
         <div class="about-text reveal">
-          <p>Hello. I'm <span class="highlight">Arpit Malhotra</span> — a data analyst and B.Tech CSE (AIML) student at
-            <span class="hl-blue">SRM Institute of Science and Technology</span> with a CGPA of <span
-              class="highlight">9.59</span>.
-          </p>
-          <p>I specialize in transforming complex datasets into clear, actionable intelligence. My toolkit spans Python,
-            SQL, Power BI, and machine learning — bridging analytical depth with visual storytelling.</p>
-          <p>From predicting diabetes with SVM models to building smart resume analyzers with Streamlit, I enjoy
-            tackling real-world problems with <span class="hl-blue">data-driven precision</span>.</p>
-          <p>Currently exploring the intersection of <span class="highlight">AI, data engineering,</span> and scalable
-            analytics systems.</p>
+          <p>Hello. I'm <span class="highlight">Arpit Malhotra</span>, a Computer Science student at <span
+              class="hl-blue">SRM Institute of Science and Technology</span> with a strong interest in building <span
+              class="highlight">practical, user-focused technology solutions</span>.</p>
+          <p>I enjoy working on projects that solve real-world problems — from <span class="hl-blue">healthcare and
+              analytics</span> to full-stack applications and interactive web experiences. My work includes projects
+            such as <span class="highlight">diabetes prediction</span>, business intelligence dashboards, a student
+            portal system, a music streaming interface, and sports data analysis.</p>
+          <p>I’m passionate about learning, exploring new ideas, and continuously improving my problem-solving skills.
+            My goal is to create <span class="hl-blue">impactful solutions</span> that combine <span
+              class="highlight">innovation, usability, and meaningful results</span>.</p>
         </div>
         <div class="about-info reveal">
           <div class="info-row"><i class="fas fa-map-marker-alt"></i><span class="label">location</span><span
@@ -2638,10 +2981,8 @@
           </div>
           <div class="info-row"><i class="fab fa-github"></i><span class="label">github</span><a
               href="https://github.com/arpitm169" target="_blank" class="val">github.com/arpitm169</a></div>
-          <div class="info-row"><i class="fas fa-graduation-cap"></i><span class="label">degree</span><span
-              class="val">B.Tech CSE (AIML)</span></div>
-          <div class="info-row"><i class="fas fa-code"></i><span class="label">focus</span><span class="val">Data
-              Analysis &amp; ML</span></div>
+          <div class="info-row"><i class="fab fa-instagram"></i><span class="label">instagram</span><a
+              href="https://www.instagram.com/arpitm169._/" target="_blank" class="val">@arpitm169._</a></div>
         </div>
       </div>
     </div>
@@ -3384,39 +3725,80 @@
           class="flag">--certs</span></div>
       <div class="cert-grid" id="cert-grid">
         <div class="cert-card" style="animation-delay:0.05s">
-          <div class="cert-icon"><i class="fas fa-brain"></i></div>
+          <span class="cert-hover-glow"></span>
+          <span class="cert-sheen"></span>
+          <div class="cert-top">
+            <div class="cert-icon"><i class="fas fa-brain"></i></div>
+            <span class="cert-badge">CERT</span>
+          </div>
           <div class="cert-info">
             <div class="cert-name">Machine Learning</div>
-            <div class="cert-issuer">AIIMS — Healthcare AI</div>
-          </div><span class="cert-badge">CERT</span>
+            <div class="cert-issuer">AIIMS - Healthcare AI</div>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-track">Disease Prediction</span>
+            <span class="cert-status">Verified</span>
+          </div>
+          <a class="cert-link" href="https://ibb.co/201Fh764" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> View Cert
+          </a>
         </div>
         <div class="cert-card" style="animation-delay:0.1s">
-          <div class="cert-icon"><i class="fab fa-aws"></i></div>
+          <span class="cert-hover-glow"></span>
+          <span class="cert-sheen"></span>
+          <div class="cert-top">
+            <div class="cert-icon"><i class="fab fa-aws"></i></div>
+            <span class="cert-badge">AWS</span>
+          </div>
           <div class="cert-info">
             <div class="cert-name">Generative AI</div>
             <div class="cert-issuer">Amazon Web Services</div>
-          </div><span class="cert-badge">AWS</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-track">Cloud + Gen AI</span>
+            <span class="cert-status">Verified</span>
+          </div>
+          <a class="cert-link" href="https://qrr.to/ba014893" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> View Cert
+          </a>
         </div>
         <div class="cert-card" style="animation-delay:0.15s">
-          <div class="cert-icon"><i class="fab fa-aws"></i></div>
+          <span class="cert-hover-glow"></span>
+          <span class="cert-sheen"></span>
+          <div class="cert-top">
+            <div class="cert-icon"><i class="fab fa-aws"></i></div>
+            <span class="cert-badge">AWS</span>
+          </div>
           <div class="cert-info">
             <div class="cert-name">Data Engineering</div>
             <div class="cert-issuer">Amazon Web Services</div>
-          </div><span class="cert-badge">AWS</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-track">Pipelines</span>
+            <span class="cert-status">Verified</span>
+          </div>
+          <a class="cert-link" href="https://ibb.co/nM6qRDKf" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> View Cert
+          </a>
         </div>
         <div class="cert-card" style="animation-delay:0.2s">
-          <div class="cert-icon"><i class="fas fa-chart-bar"></i></div>
+          <span class="cert-hover-glow"></span>
+          <span class="cert-sheen"></span>
+          <div class="cert-top">
+            <div class="cert-icon"><i class="fas fa-chart-bar"></i></div>
+            <span class="cert-badge">CERT</span>
+          </div>
           <div class="cert-info">
             <div class="cert-name">Power BI Analytics</div>
             <div class="cert-issuer">Infosys Springboard</div>
-          </div><span class="cert-badge">CERT</span>
-        </div>
-        <div class="cert-card" style="animation-delay:0.25s">
-          <div class="cert-icon"><i class="fab fa-python"></i></div>
-          <div class="cert-info">
-            <div class="cert-name">Python (5★)</div>
-            <div class="cert-issuer">HackerRank</div>
-          </div><span class="cert-badge">GOLD</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-track">BI Reporting</span>
+            <span class="cert-status">Verified</span>
+          </div>
+          <a class="cert-link" href="https://powerbicert.tiiny.site/" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> View Cert
+          </a>
         </div>
       </div>
     </div>
@@ -3428,17 +3810,27 @@
       <div class="cmd-header reveal"><span class="sym">&gt; $</span> <span class="cmd">contact</span> <span
           class="flag">--reach-out</span></div>
       <div class="contact-grid">
-        <!-- TERMINAL PANEL (LEFT) -->
+        <!-- MATRIX DECODE TERMINAL (LEFT) -->
         <div class="contact-terminal reveal" id="contact-terminal">
-          <div class="term-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-            <span class="term-title">contact_info.json</span>
+          <div class="matrix-term-header">
+            <div class="matrix-term-dots">
+              <span class="d-r"></span>
+              <span class="d-y"></span>
+              <span class="d-g"></span>
+            </div>
+            <span class="matrix-term-title">DECODE://contact_info.json</span>
+            <div class="matrix-term-status">
+              <span class="status-pulse"></span>
+              <span id="matrix-status-label">DECODING</span>
+            </div>
           </div>
-          <div class="term-body" id="json-body">
-            <!-- Lines will be injected by JavaScript for typing effect -->
-            <div class="term-cursor"></div>
+          <div class="matrix-term-body">
+            <canvas id="matrix-rain-canvas"></canvas>
+            <div class="matrix-decoded-overlay" id="matrix-decoded">
+              <div id="contact-json-block"></div>
+              <div class="matrix-human-layer" id="matrix-human"></div>
+            </div>
+            <div class="matrix-scanline" id="matrix-scanline"></div>
           </div>
         </div>
 
@@ -3463,8 +3855,8 @@
 
             <div class="prog-group">
               <div class="prog-lbl">
-                <span>System Capacity</span>
-                <span id="capacity-val">85%</span>
+                <span>Analytical Accuracy</span>
+                <span id="capacity-val">98%</span>
               </div>
               <div class="prog-track">
                 <div class="prog-fill" id="capacity-fill"></div>
@@ -3473,7 +3865,7 @@
 
             <div class="prog-group">
               <div class="prog-lbl">
-                <span>Deployment Status</span>
+                <span>Model Optimization</span>
                 <span>Active</span>
               </div>
               <div class="prog-track">
@@ -3505,7 +3897,23 @@
               <i class="fab fa-github"></i>
               <div class="u-text">
                 <div class="u-lbl">GitHub Repository</div>
-                <div class="u-val">GitHub</div>
+                <div class="u-val">github.com/arpitm169</div>
+              </div>
+            </a>
+
+            <a href="https://www.instagram.com/arpitm169._/" target="_blank" class="u-link">
+              <i class="fab fa-instagram"></i>
+              <div class="u-text">
+                <div class="u-lbl">Instagram</div>
+                <div class="u-val">@arpitm169._</div>
+              </div>
+            </a>
+
+            <a href="https://leetcode.com/u/arpitm169/" target="_blank" class="u-link">
+              <i class="fas fa-code"></i>
+              <div class="u-text">
+                <div class="u-lbl">LeetCode Profile</div>
+                <div class="u-val">leetcode.com/arpitm169</div>
               </div>
             </a>
           </div>
@@ -3514,9 +3922,425 @@
     </div>
   </section>
 
-  <footer>
-    <p>// crafted with <span>♥</span> &amp; <span>data</span> by Arpit Malhotra &mdash; <span>© 2026</span></p>
+  <!-- ===== RICH FOOTER ===== -->
+  <footer class="site-footer">
+
+    <!-- Animated grid background -->
+    <div class="footer-grid-bg" aria-hidden="true"></div>
+
+    <!-- Top divider glow line -->
+    <div class="footer-divider"></div>
+
+    <div class="footer-inner">
+
+      <!-- COL 1 — Brand -->
+      <div class="footer-brand">
+        <div class="footer-brand-name">Arpit<span class="footer-dot">.</span></div>
+        <p class="footer-tagline">Data Analyst & ML Engineer crafting intelligent solutions with Python, SQL &amp; AI.
+        </p>
+        <div class="footer-socials">
+          <a href="https://github.com/arpitm169" target="_blank" class="footer-social-icon" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/arpitm169/" target="_blank" class="footer-social-icon"
+            aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/arpitm169._/" target="_blank" class="footer-social-icon"
+            aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="mailto:arpitm169@gmail.com" class="footer-social-icon" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- COL 2 — Navigation -->
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="#about"><span class="footer-link-arrow">›</span> About</a></li>
+          <li><a href="#skills"><span class="footer-link-arrow">›</span> Skills</a></li>
+          <li><a href="#projects"><span class="footer-link-arrow">›</span> Projects</a></li>
+          <li><a href="#Education"><span class="footer-link-arrow">›</span> Education</a></li>
+          <li><a href="#achievements"><span class="footer-link-arrow">›</span> Achievements</a></li>
+          <li><a href="#contact"><span class="footer-link-arrow">›</span> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- COL 3 — Projects -->
+      <div class="footer-col">
+        <div class="footer-col-title">Projects</div>
+        <p class="footer-contact-desc">Explore all my work — from ML models to dashboards and web apps.</p>
+        <a href="#projects" class="footer-proj-btn">
+          <i class="fas fa-code-branch"></i> View All Projects
+        </a>
+        <a href="https://leetcode.com/u/arpitm169/" target="_blank" class="footer-lc-btn">
+          <i class="fas fa-code"></i> LeetCode Profile
+        </a>
+      </div>
+
+      <!-- COL 4 — Get in Touch -->
+      <div class="footer-col footer-contact-col">
+        <div class="footer-col-title">Get in Touch</div>
+        <p class="footer-contact-desc">Have a project in mind? Let's build something intelligent together.</p>
+        <a href="#contact" class="footer-cta-btn">
+          <i class="fas fa-terminal"></i> Contact Me
+        </a>
+        <div class="footer-status-chip">
+          <span class="footer-blink-dot"></span> Open to Opportunities
+        </div>
+      </div>
+
+    </div><!-- end .footer-inner -->
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <span class="footer-bottom-copy">
+        <span class="footer-sym">$</span> // crafted with <span class="footer-heart">♥</span> &amp; <span
+          class="footer-accent">data</span> by Arpit Malhotra &mdash; <span class="footer-accent">© 2026</span>
+      </span>
+    </div>
+
   </footer>
+
+  <style>
+    /* ===== RICH FOOTER ===== */
+    .site-footer {
+      position: relative;
+      background: #080808;
+      overflow: hidden;
+      margin-top: 0;
+    }
+
+    /* Animated grid background */
+    .footer-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 106, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 106, 0, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* Top glow divider */
+    .footer-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: 0.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Main content grid */
+    .footer-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 3rem;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1.4fr 1.4fr;
+      gap: 3rem;
+    }
+
+    /* Brand column */
+    .footer-brand-name {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-dot {
+      color: var(--orange);
+    }
+
+    .footer-tagline {
+      font-size: 0.72rem;
+      color: var(--text3);
+      line-height: 1.7;
+      margin-bottom: 1.4rem;
+      max-width: 260px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .footer-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255, 106, 0, 0.2);
+      border-radius: 6px;
+      color: var(--text3);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .footer-social-icon:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: rgba(255, 106, 0, 0.08);
+      box-shadow: 0 0 12px rgba(255, 106, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Generic footer column */
+    .footer-col-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: var(--text3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s ease, gap 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--orange);
+      gap: 0.7rem;
+    }
+
+    .footer-link-arrow {
+      color: var(--orange);
+      opacity: 0.5;
+      font-size: 0.85rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-links a:hover .footer-link-arrow {
+      opacity: 1;
+    }
+
+    /* Contact column */
+    .footer-contact-col .footer-col-title {
+      border-bottom-color: rgba(255, 106, 0, 0.15);
+    }
+
+    .footer-contact-desc {
+      font-size: 0.72rem;
+      color: var(--text3);
+      line-height: 1.7;
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--orange);
+      color: #000;
+      font-family: var(--font);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.65rem 1.3rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+      margin-bottom: 1rem;
+    }
+
+    .footer-cta-btn:hover {
+      background: var(--orange2);
+      box-shadow: 0 0 20px rgba(255, 106, 0, 0.5);
+      transform: translateY(-2px);
+      color: #000;
+    }
+
+    /* Projects column buttons */
+    .footer-proj-btn,
+    .footer-lc-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.6rem 1.1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      margin-bottom: 0.65rem;
+      width: fit-content;
+    }
+
+    .footer-proj-btn {
+      background: var(--orange);
+      color: #000;
+      border: 1px solid transparent;
+    }
+
+    .footer-proj-btn:hover {
+      background: var(--orange2);
+      box-shadow: 0 0 18px rgba(255, 106, 0, 0.45);
+      transform: translateY(-2px);
+      color: #000;
+    }
+
+    .footer-lc-btn {
+      background: transparent;
+      color: var(--blue);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+
+    .footer-lc-btn:hover {
+      background: rgba(0, 212, 255, 0.08);
+      border-color: var(--blue);
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.25);
+      transform: translateY(-2px);
+      color: var(--blue);
+    }
+
+    .footer-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      color: var(--green);
+      border: 1px solid rgba(0, 255, 157, 0.2);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      background: rgba(0, 255, 157, 0.05);
+    }
+
+    .footer-blink-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      display: inline-block;
+      animation: footerBlink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes footerBlink {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 6px var(--green);
+      }
+
+      50% {
+        opacity: 0.3;
+        box-shadow: none;
+      }
+    }
+
+    /* Bottom bar */
+    .footer-bottom {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.2rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom-copy {
+      font-size: 0.65rem;
+      color: var(--text3);
+    }
+
+    .footer-sym {
+      color: var(--orange);
+      margin-right: 0.3rem;
+    }
+
+    .footer-heart {
+      color: #ff0080;
+    }
+
+    .footer-accent {
+      color: var(--orange);
+    }
+
+    .footer-bottom-stack {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-tech-pill {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 106, 0, 0.2);
+      color: var(--text3);
+      background: rgba(255, 106, 0, 0.04);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .footer-tech-pill:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 1.2rem 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.2rem;
+      }
+
+      .footer-brand-name {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 
   <script>
     /* ===== CURSOR ===== */
@@ -3569,6 +4393,24 @@
       });
     }
 
+    const timelineSegmentColors = [
+      { color: 'var(--green)', glow: 'rgba(0,255,157,0.4)' },
+      { color: 'var(--purple)', glow: 'rgba(168,85,247,0.4)' },
+      { color: 'var(--orange)', glow: 'rgba(255,106,0,0.4)' },
+      { color: 'var(--blue)', glow: 'rgba(0,212,255,0.4)' },
+    ];
+
+    let timelineSegmentStops = [];
+
+    function updateScrollDotColor(index) {
+      const scrollDot = document.getElementById('timeline-scroll-dot');
+      if (!scrollDot) return;
+
+      const seg = timelineSegmentColors[index % timelineSegmentColors.length];
+      scrollDot.style.background = seg.color;
+      scrollDot.style.boxShadow = `0 0 10px ${seg.color}, 0 0 20px ${seg.glow}`;
+    }
+
     /* ===== TIMELINE BEZIER SVG ===== */
     function drawTimelineSVG() {
       const svg = document.getElementById('timeline-svg');
@@ -3580,14 +4422,8 @@
       const totalH = timeline.scrollHeight;
       svg.setAttribute('height', totalH); svg.setAttribute('viewBox', `0 0 112 ${totalH}`);
       svg.innerHTML = '';
-      const segmentColors = [
-        { color: 'var(--green)', glow: 'rgba(0,255,157,0.5)' },
-        { color: 'var(--purple)', glow: 'rgba(168,85,247,0.5)' },
-        { color: 'var(--orange)', glow: 'rgba(255,106,0,0.5)' },
-        { color: 'var(--blue)', glow: 'rgba(0,212,255,0.5)' },
-      ];
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      segmentColors.forEach((seg, i) => {
+      timelineSegmentColors.forEach((seg, i) => {
         const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
         filter.setAttribute('id', `glow-seg-${i}`);
         filter.setAttribute('x', '-50%'); filter.setAttribute('y', '-10%');
@@ -3606,8 +4442,9 @@
       });
       const waveAmp = 60;
       let masterD = '';
+      timelineSegmentStops = [];
       for (let i = 0; i < points.length - 1; i++) {
-        const p1 = points[i], p2 = points[i + 1], seg = segmentColors[i % segmentColors.length], dir = i % 2 === 0 ? 1 : -1;
+        const p1 = points[i], p2 = points[i + 1], seg = timelineSegmentColors[i % timelineSegmentColors.length], dir = i % 2 === 0 ? 1 : -1;
         const startY = p1.y + 20, endY = p2.y - 20;
         const quarterY = startY + (endY - startY) * 0.25, threeQuarterY = startY + (endY - startY) * 0.75;
         const cp1x = p1.x + dir * waveAmp * 1.2, cp2x = p2.x - dir * waveAmp * 1.2;
@@ -3619,7 +4456,7 @@
         const glowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         glowPath.setAttribute('d', pathD); glowPath.setAttribute('fill', 'none');
         glowPath.setAttribute('stroke', seg.color); glowPath.setAttribute('stroke-width', '5');
-        glowPath.setAttribute('opacity', '0.35'); glowPath.setAttribute('filter', `url(#glow-seg-${i % segmentColors.length})`);
+        glowPath.setAttribute('opacity', '0.35'); glowPath.setAttribute('filter', `url(#glow-seg-${i % timelineSegmentColors.length})`);
         svg.appendChild(glowPath);
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', pathD); path.setAttribute('fill', 'none');
@@ -3629,6 +4466,8 @@
         path.style.transition = `stroke-dashoffset ${0.8 + i * 0.25}s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.18}s`;
         svg.appendChild(path);
         requestAnimationFrame(() => { requestAnimationFrame(() => { path.style.strokeDashoffset = '0'; }); });
+
+        timelineSegmentStops.push({ pathD, colorIndex: i % timelineSegmentColors.length });
       }
 
       // Draw standard terminal origin nodes to anchor the start and end of the floating timeline
@@ -3647,8 +4486,8 @@
         svg.appendChild(inner);
       };
       const lastIdx = points.length - 1;
-      drawTerminalNode(points[0].x, points[0].y, segmentColors[0].color, 0);
-      drawTerminalNode(points[lastIdx].x, points[lastIdx].y, segmentColors[(lastIdx - 1) % segmentColors.length].color, (lastIdx - 1) % segmentColors.length);
+      drawTerminalNode(points[0].x, points[0].y, timelineSegmentColors[0].color, 0);
+      drawTerminalNode(points[lastIdx].x, points[lastIdx].y, timelineSegmentColors[(lastIdx - 1) % timelineSegmentColors.length].color, (lastIdx - 1) % timelineSegmentColors.length);
 
       // Add hidden master path for getPointAtLength interpolation
       if (!document.getElementById('master-timeline-path')) {
@@ -3657,7 +4496,26 @@
         master.style.display = 'none';
         svg.appendChild(master);
       }
-      document.getElementById('master-timeline-path').setAttribute('d', masterD);
+      const masterPath = document.getElementById('master-timeline-path');
+      masterPath.setAttribute('d', masterD);
+
+      let accumulatedLen = 0;
+      timelineSegmentStops = timelineSegmentStops.map((segment) => {
+        const tempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        tempPath.setAttribute('d', segment.pathD);
+        const length = tempPath.getTotalLength();
+        const stop = {
+          start: accumulatedLen,
+          end: accumulatedLen + length,
+          colorIndex: segment.colorIndex,
+        };
+        accumulatedLen += length;
+        return stop;
+      });
+
+      if (timelineSegmentStops.length) {
+        updateScrollDotColor(timelineSegmentStops[0].colorIndex);
+      }
     }
 
     // Add scroll tracking logic for the dot
@@ -3678,10 +4536,16 @@
 
       const totalLen = masterPath.getTotalLength();
       if (totalLen > 0) {
-        const pt = masterPath.getPointAtLength(progress * totalLen);
+        const currentLen = progress * totalLen;
+        const pt = masterPath.getPointAtLength(currentLen);
         scrollDot.style.opacity = (progress > 0.005 && progress < 0.995) ? '1' : '0';
         scrollDot.style.left = `${pt.x}px`;
         scrollDot.style.top = `${pt.y}px`;
+
+        const activeSegment = timelineSegmentStops.find(segment => currentLen >= segment.start && currentLen <= segment.end);
+        if (activeSegment) {
+          updateScrollDotColor(activeSegment.colorIndex);
+        }
       }
     };
 
@@ -3945,70 +4809,312 @@
       }
       drawGrid();
     }
-    /* ===== CONTACT TERMINAL ANIMATION ===== */
-    const jsonLines = [
-      '<span class="bracket">{</span>',
-      '  <span class="key">"name"</span>: <span class="val str">"Arpit Malhotra"</span>,',
-      '  <span class="key">"role"</span>: <span class="val str">"Data Analyst,AIML,Problem Solving"</span>,',
-      '  <span class="key">"status"</span>: <span class="val">"available"</span>,',
-      '  <span class="key">"email"</span>: <span class="val str">"arpitm169@gmail.com"</span>,',
-      '  <span class="key">"location"</span>: <span class="val str">"Dharamshala, India"</span>,',
-      '  <span class="key">"github"</span>: <span class="val str">"github.com/arpitm169"</span>,',
-      '  <span class="key">"open_to"</span>: [',
-      '    <span class="val str">"Full-time"</span>, <span class="val str">"Freelance"</span>, <span class="val str">"Research"</span>',
-      '  ]',
-      '<span class="bracket">}</span>'
-    ];
+    /* ===== MATRIX DECODE TERMINAL ===== */
+    (function MatrixDecodeTerminal() {
+      const canvas = document.getElementById('matrix-rain-canvas');
+      const overlay = document.getElementById('matrix-decoded');
+      const scanline = document.getElementById('matrix-scanline');
+      const statusLabel = document.getElementById('matrix-status-label');
+      const container = document.querySelector('.matrix-term-body');
+      if (!canvas || !overlay || !container) return;
 
-    const jsonBody = document.getElementById('json-body');
-    let terminalFired = false;
+      const ctx = canvas.getContext('2d');
+      let W, H, columns, drops;
+      let animId = null;
+      let isVisible = false;
+      let decoded = false;
+      let rainOpacity = 1;
 
-    function typeTerminal() {
-      if (terminalFired) return;
-      terminalFired = true;
+      // Characters for rain
+      const katakana = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+      const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const nums = '0123456789';
+      const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+      const allChars = katakana + latin + nums + symbols;
 
-      jsonBody.innerHTML = ''; // clear initial cursor
-      let lineIdx = 0;
+      // Contact data
+      const contactData = [
+        { type: 'bracket', text: '{' },
+        { type: 'pair', key: 'name', val: 'Arpit Malhotra' },
+        { type: 'pair', key: 'role', val: 'Computer Science Student' },
+        { type: 'pair', key: 'email', val: 'arpitm169@gmail.com' },
+        { type: 'pair', key: 'location', val: 'Dharamshala, India' },
+        { type: 'pair', key: 'github', val: 'github.com/arpitm169' },
+        { type: 'pair', key: 'linkedin', val: 'linkedin.com/in/arpitm169' },
+        { type: 'pair', key: 'status', val: 'Available for Projects' },
+        { type: 'bracket', text: '}' }
+      ];
 
-      function addLine() {
-        if (lineIdx < jsonLines.length) {
-          const lineDiv = document.createElement('div');
-          lineDiv.className = 'json-line';
-          lineDiv.innerHTML = jsonLines[lineIdx];
-          jsonBody.appendChild(lineDiv);
+      function resize() {
+        W = container.offsetWidth;
+        H = container.offsetHeight;
+        canvas.width = W;
+        canvas.height = H;
+        const fontSize = 14;
+        columns = Math.floor(W / fontSize);
+        drops = new Array(columns).fill(1).map(() => Math.random() * -50);
+      }
 
-          // Small delay for typing feel
-          setTimeout(() => {
-            lineDiv.classList.add('visible');
-            lineIdx++;
-            setTimeout(addLine, 180);
-          }, 50);
+      function setupMatrixRain() {
+        resize();
+        window.addEventListener('resize', resize);
+      }
 
-          // Keep cursor at bottom
-          const cursor = document.createElement('span');
-          cursor.className = 'term-cursor';
-          const existingCursor = jsonBody.querySelector('.term-cursor');
-          if (existingCursor) existingCursor.remove();
-          jsonBody.appendChild(cursor);
+      // --- MATRIX RAIN DRAW ---
+      function drawRain() {
+        const fontSize = 14;
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.08)';
+        ctx.fillRect(0, 0, W, H);
+
+        for (let i = 0; i < columns; i++) {
+          const char = allChars[Math.floor(Math.random() * allChars.length)];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          // Layered depth: bright front, dim back
+          const isBright = Math.random() > 0.7;
+          const isOrange = Math.random() > 0.92;
+
+          if (isOrange) {
+            ctx.fillStyle = `rgba(255, 106, 0, ${(isBright ? 0.7 : 0.25) * rainOpacity})`;
+          } else {
+            ctx.fillStyle = `rgba(0, 255, 157, ${(isBright ? 0.85 : 0.18) * rainOpacity})`;
+          }
+
+          ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+          ctx.fillText(char, x, y);
+
+          // Head glow for bright streaks
+          if (isBright && rainOpacity > 0.4) {
+            ctx.shadowColor = isOrange ? 'rgba(255, 106, 0, 0.5)' : 'rgba(0, 255, 157, 0.5)';
+            ctx.shadowBlur = 8;
+            ctx.fillText(char, x, y);
+            ctx.shadowBlur = 0;
+          }
+
+          if (y > H && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i] += Math.random() * 0.5 + 0.5;
         }
       }
-      addLine();
 
-      // Animate progress bars in side panel
-      const capFill = document.getElementById('capacity-fill');
-      if (capFill) {
-        setTimeout(() => { capFill.style.width = '85%'; }, 500);
-      }
-    }
+      // --- RENDER JSON OVERLAY ---
+      function renderTerminalJSON() {
+        const jsonBlock = document.getElementById('contact-json-block');
+        if (!jsonBlock) return;
+        jsonBlock.innerHTML = '';
+        contactData.forEach((item, i) => {
+          const line = document.createElement('div');
+          line.className = 'decoded-json-line';
+          line.style.transitionDelay = `${i * 0.08}s`;
 
-    /* Add to the existing reveal observer or create a new one */
-    const contactTerminal = document.getElementById('contact-terminal');
-    const contactObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        typeTerminal();
+          if (item.type === 'bracket') {
+            line.innerHTML = `<span class="dj-bracket">${item.text}</span>`;
+          } else {
+            const isLast = i === contactData.length - 2;
+            const comma = isLast ? '' : '<span class="dj-punctuation">,</span>';
+            line.innerHTML = `  <span class="dj-key">"${item.key}"</span><span class="dj-punctuation">: </span><span class="dj-val">"${item.val}"</span>${comma}`;
+          }
+          jsonBlock.appendChild(line);
+        });
+
+        // Add blink cursor on last line
+        const cursorSpan = document.createElement('span');
+        cursorSpan.className = 'matrix-blink-cursor';
+        jsonBlock.lastChild.appendChild(cursorSpan);
       }
-    }, { threshold: 0.5 });
-    if (contactTerminal) contactObserver.observe(contactTerminal);
+
+      // --- REVEAL HUMAN MODE (Personal Layer) ---
+      function revealHumanMode() {
+        const humanLayer = document.getElementById('matrix-human');
+        if (!humanLayer) return;
+
+        const humanData = [
+          { key: 'football', val: 'active' },
+          { key: 'trekking', val: 'favorite reset' },
+          { key: 'hiking', val: 'frequent' },
+          { tagline: 'always exploring — in code and outdoors' }
+        ];
+
+        humanLayer.innerHTML = `<div class="meta-line"><span class="dj-key">"human_mode"</span><span class="dj-punctuation">: </span><span class="dj-bracket">{</span></div>`;
+        humanLayer.classList.add('visible');
+
+        humanData.forEach((item, i) => {
+          setTimeout(() => {
+            const line = document.createElement('div');
+            line.className = 'meta-line';
+            if (item.tagline) {
+              line.innerHTML = `  <span class="meta-tagline">${item.tagline}</span>`;
+            } else {
+              line.innerHTML = `  <span class="m-key">"${item.key}"</span><span class="dj-punctuation">: </span><span class="m-val">"${item.val}"</span>${i === 2 ? '' : ','}`;
+            }
+            // Simple typewriter reveal for hobby lines
+            const content = line.innerHTML;
+            line.innerHTML = '';
+            humanLayer.appendChild(line);
+            
+            let charIdx = 0;
+            const type = () => {
+              if (charIdx < content.length) {
+                line.innerHTML = content.substring(0, charIdx + 1);
+                charIdx++;
+                setTimeout(type, 20);
+              }
+            };
+            type();
+          }, 800 + i * 600);
+        });
+
+        setTimeout(() => {
+          const closing = document.createElement('div');
+          closing.className = 'meta-line';
+          closing.innerHTML = `<span class="dj-bracket">}</span>`;
+          humanLayer.appendChild(closing);
+        }, 800 + humanData.length * 600);
+      }
+
+      // --- DECODE ANIMATION ---
+      function runDecodeAnimation() {
+        renderTerminalJSON();
+
+        // Fade rain to background level
+        const fadeRain = () => {
+          if (rainOpacity > 0.12) {
+            rainOpacity -= 0.015;
+            requestAnimationFrame(fadeRain);
+          } else {
+            rainOpacity = 0.12;
+          }
+        };
+
+        setTimeout(() => {
+          fadeRain();
+          overlay.classList.add('visible');
+
+          // Reveal lines one by one
+          const lines = overlay.querySelectorAll('.decoded-json-line');
+          lines.forEach((line, i) => {
+            setTimeout(() => line.classList.add('revealed'), i * 150);
+          });
+
+          // Activate scanline
+          setTimeout(() => {
+            scanline.classList.add('active');
+            if (statusLabel) {
+              statusLabel.textContent = 'LOCKED';
+              statusLabel.style.color = 'var(--green)';
+            }
+            
+            // Trigger Beyond Code reveal
+            setTimeout(revealHumanMode, 1500);
+          }, lines.length * 150 + 200);
+
+          decoded = true;
+
+          // Animate progress bar
+          const capFill = document.getElementById('capacity-fill');
+          if (capFill) setTimeout(() => { capFill.style.width = '98%'; }, 500);
+
+        }, 3200);
+      }
+
+      // --- GLITCH LOOP (idle mode) ---
+      function glitchLoop() {
+        if (!decoded || !isVisible) return;
+
+        const lines = overlay.querySelectorAll('.decoded-json-line');
+        const body = container;
+
+        // Quick glitch flash
+        body.classList.add('matrix-glitch');
+        setTimeout(() => body.classList.remove('matrix-glitch'), 150);
+
+        // Scramble some lines temporarily
+        const scrambleCount = 2 + Math.floor(Math.random() * 3);
+        const indices = [];
+        while (indices.length < scrambleCount && indices.length < lines.length) {
+          const idx = Math.floor(Math.random() * lines.length);
+          if (!indices.includes(idx)) indices.push(idx);
+        }
+
+        indices.forEach(idx => {
+          const line = lines[idx];
+          const original = line.innerHTML;
+          const scrambled = original.replace(/[a-zA-Z0-9@.\/_\-]/g, () => allChars[Math.floor(Math.random() * allChars.length)]);
+          line.innerHTML = scrambled;
+          line.style.color = 'var(--green)';
+          line.style.textShadow = '0 0 12px rgba(0, 255, 157, 0.6)';
+
+          // Restore after flicker
+          setTimeout(() => {
+            line.innerHTML = original;
+            line.style.color = '';
+            line.style.textShadow = '';
+          }, 600 + Math.random() * 400);
+        });
+
+        // Occasionally highlight a hobby line
+        const metaLines = document.querySelectorAll('.meta-line');
+        if (metaLines.length > 2 && Math.random() > 0.6) {
+          const randomMeta = metaLines[Math.floor(Math.random() * (metaLines.length-2)) + 1];
+          randomMeta.classList.add('highlight');
+          setTimeout(() => randomMeta.classList.remove('highlight'), 2000);
+        }
+
+        // Brief rain surge
+        const oldOpacity = rainOpacity;
+        rainOpacity = 0.45;
+        setTimeout(() => { rainOpacity = oldOpacity; }, 1200);
+
+        // Schedule next glitch
+        setTimeout(glitchLoop, 25000 + Math.random() * 10000);
+      }
+
+      // --- ANIMATION LOOP ---
+      function animate() {
+        if (!isVisible) { animId = null; return; }
+        drawRain();
+        animId = requestAnimationFrame(animate);
+      }
+
+      function start() {
+        if (animId) return;
+        isVisible = true;
+        animate();
+        if (!decoded) runDecodeAnimation();
+      }
+
+      function stop() {
+        isVisible = false;
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      }
+
+      // --- INTERSECTION OBSERVER ---
+      const contactTerminal = document.getElementById('contact-terminal');
+      const matrixObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            start();
+          } else {
+            stop();
+          }
+        });
+      }, { threshold: 0.2 });
+
+      setupMatrixRain();
+      if (contactTerminal) matrixObserver.observe(contactTerminal);
+
+      // Start glitch loop after initial decode
+      setTimeout(() => {
+        if (decoded) glitchLoop();
+        else {
+          const checkDecoded = setInterval(() => {
+            if (decoded) { clearInterval(checkDecoded); glitchLoop(); }
+          }, 1000);
+        }
+      }, 10000);
+    })();
 
     /* ===== COPY EMAIL LOGIC ===== */
     const emailLink = document.getElementById('copy-email');
