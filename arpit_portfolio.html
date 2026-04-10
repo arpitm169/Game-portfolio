@@ -2328,9 +2328,17 @@
       border-radius: 50%;
     }
 
-    .matrix-term-dots .d-r { background: #ff5f56; }
-    .matrix-term-dots .d-y { background: #ffbd2e; }
-    .matrix-term-dots .d-g { background: #27c93f; }
+    .matrix-term-dots .d-r {
+      background: #ff5f56;
+    }
+
+    .matrix-term-dots .d-y {
+      background: #ffbd2e;
+    }
+
+    .matrix-term-dots .d-g {
+      background: #27c93f;
+    }
 
     .matrix-term-title {
       font-size: 0.62rem;
@@ -2358,8 +2366,17 @@
     }
 
     @keyframes matrixPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+      }
     }
 
     .matrix-term-body {
@@ -2435,12 +2452,35 @@
     }
 
     @keyframes matrixGlitch {
-      0% { transform: translate(0); filter: none; }
-      20% { transform: translate(-2px, 1px); filter: hue-rotate(40deg); }
-      40% { transform: translate(1px, -1px); filter: hue-rotate(-20deg) saturate(1.5); }
-      60% { transform: translate(-1px, 0px); filter: hue-rotate(10deg); }
-      80% { transform: translate(2px, 1px); filter: hue-rotate(-10deg); }
-      100% { transform: translate(0); filter: none; }
+      0% {
+        transform: translate(0);
+        filter: none;
+      }
+
+      20% {
+        transform: translate(-2px, 1px);
+        filter: hue-rotate(40deg);
+      }
+
+      40% {
+        transform: translate(1px, -1px);
+        filter: hue-rotate(-20deg) saturate(1.5);
+      }
+
+      60% {
+        transform: translate(-1px, 0px);
+        filter: hue-rotate(10deg);
+      }
+
+      80% {
+        transform: translate(2px, 1px);
+        filter: hue-rotate(-10deg);
+      }
+
+      100% {
+        transform: translate(0);
+        filter: none;
+      }
     }
 
     /* Scanline sweep */
@@ -2462,8 +2502,13 @@
     }
 
     @keyframes scanlineSweep {
-      0% { top: -3px; }
-      100% { top: 100%; }
+      0% {
+        top: -3px;
+      }
+
+      100% {
+        top: 100%;
+      }
     }
 
     /* Hover line highlight */
@@ -2542,9 +2587,18 @@
     }
 
     @media (max-width: 900px) {
-      .contact-terminal { min-height: 350px; }
-      .matrix-decoded-overlay { padding: 1.5rem 1.2rem; }
-      .decoded-json-line { font-size: 0.68rem; line-height: 1.7; }
+      .contact-terminal {
+        min-height: 350px;
+      }
+
+      .matrix-decoded-overlay {
+        padding: 1.5rem 1.2rem;
+      }
+
+      .decoded-json-line {
+        font-size: 0.68rem;
+        line-height: 1.7;
+      }
     }
 
     /* System Status Panel (Right) */
@@ -2608,30 +2662,157 @@
       font-weight: 600;
     }
 
-    .prog-group {
-      margin-top: 0.5rem;
+    .constellation-shell {
+      margin-top: 0.35rem;
     }
 
-    .prog-lbl {
+    .constellation-head {
       display: flex;
       justify-content: space-between;
-      font-size: 0.62rem;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .constellation-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+    }
+
+    .constellation-title strong {
+      font-size: 0.74rem;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    .constellation-title span {
+      font-size: 0.58rem;
       color: var(--text3);
-      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
-    .prog-track {
-      height: 4px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 2px;
+    .constellation-chip {
+      font-size: 0.56rem;
+      color: var(--blue);
+      border: 1px solid rgba(0, 212, 255, 0.18);
+      background: rgba(0, 212, 255, 0.05);
+      border-radius: 999px;
+      padding: 0.3rem 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .constellation-panel {
+      position: relative;
+      height: 300px;
       overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 106, 0, 0.12);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 106, 0, 0.12), transparent 34%),
+        radial-gradient(circle at 82% 22%, rgba(0, 212, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 72% 84%, rgba(0, 255, 157, 0.09), transparent 26%),
+        linear-gradient(180deg, rgba(8, 8, 10, 0.94), rgba(4, 5, 8, 0.98));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 35px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(12px);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      isolation: isolate;
     }
 
-    .prog-fill {
+    .constellation-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px);
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 2;
+      mix-blend-mode: screen;
+    }
+
+    .constellation-panel:hover,
+    .constellation-panel.is-active {
+      transform: translateY(-3px);
+      border-color: rgba(255, 106, 0, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 22px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(255, 106, 0, 0.08);
+    }
+
+    .constellation-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--green));
-      width: 0%;
-      transition: width 1.5s cubic-bezier(0.2, 0, 0.2, 1);
+      z-index: 1;
+      display: block;
+    }
+
+    .constellation-tooltip {
+      position: absolute;
+      min-width: 148px;
+      max-width: 190px;
+      padding: 0.7rem 0.8rem;
+      border-radius: 10px;
+      background: rgba(12, 14, 18, 0.76);
+      border: 1px solid rgba(0, 212, 255, 0.28);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38), 0 0 18px rgba(0, 212, 255, 0.1);
+      font-family: var(--font);
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transform: translate3d(-50%, -10px, 0) scale(0.96);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .constellation-tooltip.visible {
+      opacity: 1;
+      transform: translate3d(-50%, -16px, 0) scale(1);
+    }
+
+    .constellation-tooltip strong {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+
+    .constellation-tooltip div {
+      font-size: 0.62rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .constellation-caption {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 0.85rem;
+      z-index: 3;
+      font-size: 0.58rem;
+      color: rgba(232, 232, 232, 0.45);
+      letter-spacing: 0.05em;
+      text-align: center;
+      pointer-events: none;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 900px) {
+      .constellation-panel {
+        height: 282px;
+      }
+
+      .constellation-head {
+        align-items: flex-start;
+      }
+
+      .constellation-chip {
+        font-size: 0.52rem;
+      }
     }
 
     .unified-links {
@@ -3853,23 +4034,18 @@
               <span class="stat-val">&lt; 24 Hours</span>
             </div>
 
-            <div class="prog-group">
-              <div class="prog-lbl">
-                <span>Analytical Accuracy</span>
-                <span id="capacity-val">98%</span>
+            <div class="constellation-shell">
+              <div class="constellation-head">
+                <div class="constellation-title">
+                  <strong>Personal Constellation Map</strong>
+                  <span>Things That Define Me</span>
+                </div>
+                <div class="constellation-chip">Interactive Sky</div>
               </div>
-              <div class="prog-track">
-                <div class="prog-fill" id="capacity-fill"></div>
-              </div>
-            </div>
-
-            <div class="prog-group">
-              <div class="prog-lbl">
-                <span>Model Optimization</span>
-                <span>Active</span>
-              </div>
-              <div class="prog-track">
-                <div class="prog-fill" style="width: 100%; opacity: 0.6;"></div>
+              <div class="constellation-panel" id="constellation-panel" aria-label="Personal constellation map">
+                <canvas class="constellation-canvas" id="constellation-canvas"></canvas>
+                <div class="constellation-tooltip" id="constellation-tooltip" role="status" aria-live="polite"></div>
+                <div class="constellation-caption">Built from code, curiosity, and the outdoors.</div>
               </div>
             </div>
           </div>
@@ -4953,7 +5129,7 @@
             const content = line.innerHTML;
             line.innerHTML = '';
             humanLayer.appendChild(line);
-            
+
             let charIdx = 0;
             const type = () => {
               if (charIdx < content.length) {
@@ -5005,16 +5181,12 @@
               statusLabel.textContent = 'LOCKED';
               statusLabel.style.color = 'var(--green)';
             }
-            
+
             // Trigger Beyond Code reveal
             setTimeout(revealHumanMode, 1500);
           }, lines.length * 150 + 200);
 
           decoded = true;
-
-          // Animate progress bar
-          const capFill = document.getElementById('capacity-fill');
-          if (capFill) setTimeout(() => { capFill.style.width = '98%'; }, 500);
 
         }, 3200);
       }
@@ -5057,7 +5229,7 @@
         // Occasionally highlight a hobby line
         const metaLines = document.querySelectorAll('.meta-line');
         if (metaLines.length > 2 && Math.random() > 0.6) {
-          const randomMeta = metaLines[Math.floor(Math.random() * (metaLines.length-2)) + 1];
+          const randomMeta = metaLines[Math.floor(Math.random() * (metaLines.length - 2)) + 1];
           randomMeta.classList.add('highlight');
           setTimeout(() => randomMeta.classList.remove('highlight'), 2000);
         }
@@ -5115,6 +5287,400 @@
         }
       }, 10000);
     })();
+
+    function initConstellation() {
+      const panel = document.getElementById('constellation-panel');
+      const canvas = document.getElementById('constellation-canvas');
+      const tooltip = document.getElementById('constellation-tooltip');
+      if (!panel || !canvas || !tooltip) return;
+
+      const ctx = canvas.getContext('2d');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const starMap = [
+        {
+          id: 'python',
+          label: 'Python',
+          subtitle: ['Core Language', 'Used in ML + analytics'],
+          x: 0.36,
+          y: 0.5,
+          radius: 7.8,
+          color: '#ff8c00',
+          glowRgb: '255, 140, 0',
+          glow: 'rgba(255, 140, 0, 0.45)',
+          depth: 1.1,
+          pulse: 1.45
+        },
+        {
+          id: 'powerbi',
+          label: 'Power BI',
+          subtitle: ['Dashboard storytelling', 'Data visualization'],
+          x: 0.64,
+          y: 0.29,
+          radius: 5.8,
+          color: '#ff9a3c',
+          glowRgb: '0, 212, 255',
+          glow: 'rgba(0, 212, 255, 0.36)',
+          depth: 0.8,
+          pulse: 1.05
+        },
+        {
+          id: 'ml',
+          label: 'Machine Learning',
+          subtitle: ['Predictive systems', 'Smart problem solving'],
+          x: 0.67,
+          y: 0.62,
+          radius: 5.2,
+          color: '#00ff9d',
+          glowRgb: '0, 255, 157',
+          glow: 'rgba(0, 255, 157, 0.34)',
+          depth: 0.82,
+          pulse: 1.15
+        },
+        {
+          id: 'football',
+          label: 'Football',
+          subtitle: ['Teamwork / discipline'],
+          x: 0.18,
+          y: 0.77,
+          radius: 4.9,
+          color: '#ffc14d',
+          glowRgb: '255, 193, 77',
+          glow: 'rgba(0, 255, 157, 0.18)',
+          depth: 0.72,
+          pulse: 0.95
+        },
+        {
+          id: 'trekking',
+          label: 'Trekking',
+          subtitle: ['Curiosity / explorer mindset'],
+          x: 0.81,
+          y: 0.16,
+          radius: 4.8,
+          color: '#8feaff',
+          glowRgb: '143, 234, 255',
+          glow: 'rgba(143, 234, 255, 0.24)',
+          depth: 0.68,
+          pulse: 0.9
+        }
+      ];
+
+      const links = [
+        ['python', 'powerbi'],
+        ['powerbi', 'ml'],
+        ['football', 'python'],
+        ['trekking', 'python']
+      ];
+
+      let width = 0;
+      let height = 0;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let animationFrame = null;
+      let isVisible = false;
+      let hoverId = null;
+      let activeId = 'python';
+      let hoveredStar = null;
+      let backgroundStars = [];
+      let particles = [];
+      let shootingStar = null;
+      let nextShootAt = 0;
+      const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5, inside: false };
+
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+
+      function connectedToActive(id) {
+        if (!activeId) return false;
+        return links.some(([a, b]) => (a === activeId && b === id) || (b === activeId && a === id));
+      }
+
+      function buildBackgroundStars() {
+        const count = isMobile() ? 24 : 42;
+        backgroundStars = Array.from({ length: count }, () => ({
+          x: Math.random(),
+          y: Math.random(),
+          size: Math.random() * 1.7 + 0.35,
+          alpha: Math.random() * 0.45 + 0.12,
+          speed: Math.random() * 0.0018 + 0.0007,
+          offset: Math.random() * Math.PI * 2,
+          depth: Math.random() * 0.7 + 0.2
+        }));
+
+        particles = Array.from({ length: isMobile() ? 5 : 9 }, () => ({
+          angle: Math.random() * Math.PI * 2,
+          distance: 10 + Math.random() * 18,
+          size: Math.random() * 1.6 + 0.6,
+          speed: Math.random() * 0.0008 + 0.00035,
+          alpha: Math.random() * 0.2 + 0.1
+        }));
+      }
+
+      function resizeConstellation() {
+        const rect = panel.getBoundingClientRect();
+        width = Math.max(rect.width, 10);
+        height = Math.max(rect.height, 10);
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buildBackgroundStars();
+      }
+
+      function getStarState(star, time) {
+        const nx = mouse.x - 0.5;
+        const ny = mouse.y - 0.5;
+        const parallaxX = mouse.inside ? nx * 18 * star.depth : 0;
+        const parallaxY = mouse.inside ? ny * 14 * star.depth : 0;
+        const wave = reducedMotion ? 0 : Math.sin(time * 0.0011 * star.pulse + star.x * 8) * 1.8;
+        const playful = star.id === 'football' && !reducedMotion ? Math.sin(time * 0.002) * 2.6 : 0;
+        return {
+          ...star,
+          px: star.x * width + parallaxX,
+          py: star.y * height + parallaxY + wave + playful,
+          pr: star.radius + (hoverId === star.id ? 1.7 : activeId === star.id ? 1.1 : 0)
+        };
+      }
+
+      function updateTooltip(star) {
+        if (!star) {
+          tooltip.classList.remove('visible');
+          return;
+        }
+
+        tooltip.innerHTML = `<strong>${star.label}</strong><div>${star.subtitle.join('<br>')}</div>`;
+        const left = Math.min(Math.max(star.px, 82), width - 82);
+        const top = Math.max(star.py - 18, 52);
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+        tooltip.classList.add('visible');
+      }
+
+      function drawNebula() {
+        const gradients = [
+          { x: width * 0.14, y: height * 0.16, r: width * 0.26, c: 'rgba(255, 106, 0, 0.09)' },
+          { x: width * 0.88, y: height * 0.2, r: width * 0.22, c: 'rgba(0, 212, 255, 0.08)' },
+          { x: width * 0.78, y: height * 0.88, r: width * 0.24, c: 'rgba(0, 255, 157, 0.05)' }
+        ];
+
+        gradients.forEach(({ x, y, r, c }) => {
+          const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+          g.addColorStop(0, c);
+          g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, width, height);
+        });
+      }
+
+      function drawBackground(time) {
+        ctx.clearRect(0, 0, width, height);
+        drawNebula();
+
+        backgroundStars.forEach((star) => {
+          const twinkle = 0.65 + Math.sin(time * star.speed + star.offset) * 0.35;
+          const px = star.x * width + (mouse.x - 0.5) * 10 * star.depth;
+          const py = star.y * height + (mouse.y - 0.5) * 7 * star.depth;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255,255,255,${star.alpha * twinkle})`;
+          ctx.arc(px, py, star.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawShootingStar(time) {
+        if (!shootingStar && time > nextShootAt) {
+          shootingStar = {
+            x: width * (0.18 + Math.random() * 0.4),
+            y: height * (0.1 + Math.random() * 0.25),
+            vx: isMobile() ? 3.2 : 4.4,
+            vy: isMobile() ? 1.2 : 1.7,
+            life: 0,
+            duration: isMobile() ? 42 : 58
+          };
+          nextShootAt = time + (10000 + Math.random() * 5000);
+        }
+
+        if (!shootingStar) return;
+
+        const s = shootingStar;
+        const alpha = Math.max(0, 1 - s.life / s.duration);
+        ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.8})`;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.vx * 10, s.y - s.vy * 10);
+        ctx.stroke();
+
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life += 1;
+        if (s.life >= s.duration) shootingStar = null;
+      }
+
+      function renderStars(time) {
+        const states = Object.fromEntries(starMap.map((star) => [star.id, getStarState(star, time)]));
+        const focusId = hoverId || activeId;
+
+        links.forEach(([a, b]) => {
+          const from = states[a];
+          const to = states[b];
+          const isFocus = focusId && (a === focusId || b === focusId || (activeId && (a === activeId || b === activeId)));
+          ctx.beginPath();
+          ctx.moveTo(from.px, from.py);
+          ctx.lineTo(to.px, to.py);
+          ctx.strokeStyle = isFocus ? 'rgba(255, 180, 120, 0.58)' : 'rgba(110, 160, 200, 0.22)';
+          ctx.lineWidth = isFocus ? 1.35 : 1;
+          ctx.shadowBlur = isFocus ? 10 : 0;
+          ctx.shadowColor = isFocus ? 'rgba(255, 140, 0, 0.28)' : 'transparent';
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+        });
+
+        const trekking = states.trekking;
+        particles.forEach((particle) => {
+          const angle = particle.angle + time * particle.speed;
+          const px = trekking.px + Math.cos(angle) * particle.distance;
+          const py = trekking.py + Math.sin(angle) * particle.distance * 0.68;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(143, 234, 255, ${particle.alpha})`;
+          ctx.arc(px, py, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        starMap.forEach((star) => {
+          const current = states[star.id];
+          const hovered = hoverId === star.id;
+          const active = activeId === star.id;
+          const related = connectedToActive(star.id) || hovered;
+          const dim = activeId && !active && !related && hoverId !== star.id;
+          const alpha = dim ? 0.42 : 1;
+          const aura = hovered ? 24 : active ? 20 : 14;
+          const pulse = 0.72 + (Math.sin(time * 0.0022 * star.pulse) + 1) * 0.14;
+          const auraOpacity = (hovered ? 0.46 : active ? 0.34 : 0.2) * alpha;
+
+          ctx.beginPath();
+          const glow = ctx.createRadialGradient(current.px, current.py, 0, current.px, current.py, aura);
+          glow.addColorStop(0, `rgba(${star.glowRgb}, ${auraOpacity})`);
+          glow.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = glow;
+          ctx.arc(current.px, current.py, aura, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (star.id === 'python') {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 140, 0, ${0.22 * pulse})`;
+            ctx.lineWidth = 1.4;
+            ctx.arc(current.px, current.py, current.pr + 6 + Math.sin(time * 0.0024) * 1.2, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          if (star.id === 'ml') {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 157, ${0.18 * pulse})`;
+            ctx.lineWidth = 1;
+            ctx.arc(current.px, current.py, current.pr + 9 + Math.sin(time * 0.002) * 1.5, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          ctx.shadowColor = star.glow;
+          ctx.shadowBlur = hovered ? 18 : active ? 16 : 10;
+          ctx.beginPath();
+          ctx.fillStyle = star.color;
+          ctx.globalAlpha = alpha;
+          ctx.arc(current.px, current.py, current.pr, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
+
+          if (!isMobile()) {
+            ctx.fillStyle = `rgba(232, 232, 232, ${dim ? 0.4 : 0.76})`;
+            ctx.font = "600 11px 'JetBrains Mono', monospace";
+            ctx.fillText(star.label, current.px + 10, current.py - 10);
+          }
+        });
+
+        if (hoveredStar) updateTooltip(states[hoveredStar.id]);
+      }
+
+      function handleHover(clientX, clientY) {
+        const rect = panel.getBoundingClientRect();
+        mouse.tx = (clientX - rect.left) / rect.width;
+        mouse.ty = (clientY - rect.top) / rect.height;
+        mouse.inside = true;
+
+        const time = performance.now();
+        const states = starMap.map((star) => getStarState(star, time));
+        hoveredStar = states.find((star) => Math.hypot(star.px - (clientX - rect.left), star.py - (clientY - rect.top)) <= star.pr + 11) || null;
+        hoverId = hoveredStar ? hoveredStar.id : null;
+        panel.classList.toggle('is-active', Boolean(hoverId || activeId));
+        if (hoveredStar) updateTooltip(hoveredStar);
+        else tooltip.classList.remove('visible');
+      }
+
+      function animateSky(time) {
+        if (!isVisible) {
+          animationFrame = null;
+          return;
+        }
+
+        mouse.x += (mouse.tx - mouse.x) * 0.06;
+        mouse.y += (mouse.ty - mouse.y) * 0.06;
+        drawBackground(time);
+        drawShootingStar(time);
+        renderStars(time);
+        animationFrame = requestAnimationFrame(animateSky);
+      }
+
+      function startAnimation() {
+        if (animationFrame) return;
+        isVisible = true;
+        animationFrame = requestAnimationFrame(animateSky);
+      }
+
+      function stopAnimation() {
+        isVisible = false;
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+      }
+
+      panel.addEventListener('pointermove', (event) => handleHover(event.clientX, event.clientY));
+      panel.addEventListener('pointerleave', () => {
+        mouse.inside = false;
+        mouse.tx = 0.5;
+        mouse.ty = 0.5;
+        hoverId = null;
+        hoveredStar = null;
+        tooltip.classList.remove('visible');
+        panel.classList.toggle('is-active', Boolean(activeId));
+      });
+      panel.addEventListener('click', (event) => {
+        handleHover(event.clientX, event.clientY);
+        if (hoveredStar) {
+          activeId = hoveredStar.id;
+          panel.classList.add('is-active');
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) startAnimation();
+          else stopAnimation();
+        });
+      }, { threshold: 0.2 });
+
+      window.addEventListener('resize', resizeConstellation);
+      resizeConstellation();
+      nextShootAt = performance.now() + 2500;
+      observer.observe(panel);
+    }
+
+    initConstellation();
 
     /* ===== COPY EMAIL LOGIC ===== */
     const emailLink = document.getElementById('copy-email');
